@@ -1,10 +1,10 @@
 # StockModule
 
-**TODO: Add description**
+**A module to fetch stock prices from Alpha Vantage API**
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
+The package can be installed
 by adding `stock_module` to your list of dependencies in `mix.exs`:
 
 ```elixir
@@ -15,7 +15,5 @@ def deps do
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/stock_module](https://hexdocs.pm/stock_module).
+Documentation can be found in [Docs](https://hexdocs.pm/stock_module)
 
