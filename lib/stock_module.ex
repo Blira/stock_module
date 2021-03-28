@@ -17,17 +17,28 @@ defmodule StockModule do
     url = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY_EXTENDED&symbol=#{stock_symbol}&interval=#{interval}min&slice=year1month1&apikey=#{api_key}"
     case HTTPoison.get(url) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        body_to_list = String.split(body, ",")
-        chuncked_body_list = Enum.chunk_every(body_to_list, 6)
+        chuncked_body_list = parse_body_to_chuncked_list body
         try do
-        [_head, current_prices | _tail] = chuncked_body_list
-        [open, high, low, close | _tail] = current_prices
-        [open, high, low, close]
+          extract_current_prices(chuncked_body_list)
         rescue _err -> IO.puts("API returned an empty body. Please, review your request and make sure you are providing valid arguments.") end
       {:ok, %HTTPoison.Response{status_code: 404}} ->
         IO.puts "Not found :("
       {:error, %HTTPoison.Error{reason: reason}} ->
-        IO.inspect reason
+        IO.puts reason
     end
   end
+
+  defp parse_body_to_chuncked_list body do
+    body
+    |> String.split(",")
+    |> Enum.chunk_every(6)
+  end
+
+  defp extract_current_prices(chuncked_body_list) do
+    [_head, current_prices | _tail] = chuncked_body_list
+    [open, high, low, close | _tail] = current_prices
+    [open, high, low, close]
+  end
+
+
 end
